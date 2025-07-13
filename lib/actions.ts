@@ -113,8 +113,7 @@ export async function getDailyPnL(): Promise<DailyPnL[]> {
 export async function addTrade(formData: FormData) {
   await ensureColumns()
 
-  const tradeDate = (formData.get("tradeDate") as string) || new Date().toISOString().split("T")[0] // yyyy-mm-dd
-
+  const tradeDate = (formData.get("tradeDate") as string) || new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' }).split(',')[0]
   const symbol = "XAUUSD"
   const tradeType = formData.get("tradeType") as string
   const lotSize = Number.parseInt(formData.get("lotSize") as string)
@@ -122,7 +121,7 @@ export async function addTrade(formData: FormData) {
   const exitPrice = Number.parseFloat(formData.get("exitPrice") as string) // required
   const notes = formData.get("notes") as string
 
-  const profitLoss = tradeType === "BUY" ? (exitPrice - entryPrice) * lotSize : (entryPrice - exitPrice) * lotSize
+  const profitLoss = tradeType === "BUY" ? (exitPrice - entryPrice) * lotSize * 100 : (entryPrice - exitPrice) * lotSize * 100
 
   /* ALWAYS provide both date columns */
   await sql`

@@ -40,13 +40,13 @@ export function AddTradeForm() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-card border-border text-foreground">
         <DialogHeader>
-          <DialogTitle className="text-foreground">Add New Closed XAUUSD Trade</DialogTitle>
+          <DialogTitle className="text-foreground">Add New Trade</DialogTitle>
         </DialogHeader>
         <form action={handleSubmit} className="space-y-4">
           {/* Symbol is now fixed and not displayed */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="tradeType" className="text-foreground">
+              <Label htmlFor="tradeType" className="text-foreground mb-2">
                 Trade Type
               </Label>
               <Select name="tradeType" required>
@@ -67,16 +67,18 @@ export function AddTradeForm() {
                 id="lotSize"
                 name="lotSize"
                 type="number"
-                placeholder="100"
+                placeholder="0.1"
+                min={0.01}
+                step={0.01}
                 required
-                className="bg-background border-border text-foreground"
+                className="bg-background border-border text-foreground mt-2"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="entryPrice" className="text-foreground">
+              <Label htmlFor="entryPrice" className="text-foreground mb-2">
                 Entry Price
               </Label>
               <Input
@@ -90,7 +92,7 @@ export function AddTradeForm() {
               />
             </div>
             <div>
-              <Label htmlFor="exitPrice" className="text-foreground">
+              <Label htmlFor="exitPrice" className="text-foreground mb-2">
                 Exit Price
               </Label>
               <Input
@@ -106,7 +108,7 @@ export function AddTradeForm() {
           </div>
 
           <div>
-            <Label htmlFor="tradeDate" className="text-foreground">
+            <Label htmlFor="tradeDate" className="text-foreground mb-2">
               Trade Date
             </Label>
             <Input
@@ -119,7 +121,7 @@ export function AddTradeForm() {
           </div>
 
           <div>
-            <Label htmlFor="notes" className="text-foreground">
+            <Label htmlFor="notes" className="text-foreground mb-2">
               Notes
             </Label>
             <Textarea

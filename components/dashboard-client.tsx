@@ -46,9 +46,11 @@ export function DashboardClient({ initialTrades, dailyPnL }: DashboardClientProp
 
         <TradingStats trades={tradesForSelectedDate} />
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <TradingCalendar dailyPnL={dailyPnL} onDayClick={handleDayClick} selectedDate={selectedDate} />
-          <div className="space-y-4">
+        <div className="grid gap-6 lg:grid-cols-4">
+          <div className="col-span-2 lg:col-span-3">
+            <TradingCalendar dailyPnL={dailyPnL} onDayClick={handleDayClick} selectedDate={selectedDate} />
+          </div>
+          <div className="space-y-4 cols-span-1">
             <div className="grid gap-4">
               <div className="bg-card border border-border rounded-lg p-4">
                 <h3 className="text-lg font-semibold text-foreground mb-2">Quick Stats</h3>

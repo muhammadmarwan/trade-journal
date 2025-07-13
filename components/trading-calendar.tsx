@@ -75,14 +75,14 @@ export function TradingCalendar({ dailyPnL, onDayClick, selectedDate }: TradingC
           <ChevronLeft className="h-5 w-5" />
         </Button>
         <CardTitle className="text-foreground text-lg">
-          {monthNames[currentMonth]} {currentYear} - Trading Calendar
+          {monthNames[currentMonth]} {currentYear}
         </CardTitle>
-        <Button variant="ghost" size="icon" onClick={handleNextMonth} className="text-muted-foreground hover:bg-muted">
+        <Button variant="ghost" size="icon" onClick={handleNextMonth} className="text-muted-foreground hover:bg-muted ">
           <ChevronRight className="h-5 w-5" />
         </Button>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-2 ml-12 mr-12 mb-10">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <div key={day} className="p-2 text-center text-sm font-medium text-muted-foreground">
               {day}
@@ -99,7 +99,7 @@ export function TradingCalendar({ dailyPnL, onDayClick, selectedDate }: TradingC
               <div
                 key={index}
                 className={`
-                  p-2 min-h-[60px] border rounded-lg transition-colors cursor-pointer
+                  p-2 min-h-[100px] border rounded-lg transition-colors cursor-pointer
                   ${isCurrentMonth ? "bg-background" : "bg-muted/50"}
                   ${isToday ? "ring-2 ring-primary" : ""}
                   ${isSelected ? "bg-primary/20 border-primary" : "border-border"}
