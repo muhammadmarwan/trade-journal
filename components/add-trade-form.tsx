@@ -85,7 +85,7 @@ export function AddTradeForm() {
                 name="entryPrice"
                 type="number"
                 step="0.01"
-                placeholder="150.00"
+                placeholder="3000.00"
                 required
                 className="bg-background border-border text-foreground"
               />
@@ -99,7 +99,7 @@ export function AddTradeForm() {
                 name="exitPrice"
                 type="number"
                 step="0.01"
-                placeholder="155.00"
+                placeholder="3100.00"
                 required // Exit price is now required
                 className="bg-background border-border text-foreground"
               />

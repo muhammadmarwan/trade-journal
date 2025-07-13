@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS trades (
   trade_date DATE NOT NULL,
   symbol VARCHAR(10) NOT NULL,
   trade_type VARCHAR(4) NOT NULL CHECK (trade_type IN ('BUY', 'SELL')),
-  lot_size INTEGER NOT NULL,
+  lot_size DECIMAL(10, 2) NOT NULL,
   entry_price DECIMAL(10, 2) NOT NULL,
   exit_price DECIMAL(10, 2),
   profit_loss DECIMAL(10, 2) DEFAULT 0,
