@@ -89,7 +89,10 @@ export function TradingCalendar({ dailyPnL, onDayClick, selectedDate }: TradingC
             </div>
           ))}
           {days.map((day, index) => {
-            const dateStr = day.toISOString().split("T")[0]
+            const year = day.getFullYear();
+            const month = String(day.getMonth() + 1).padStart(2, '0');
+            const date = String(day.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${date}`;
             const dayData = pnlMap.get(dateStr)
             const isCurrentMonth = day.getMonth() === currentMonth
             const isToday = day.toDateString() === new Date().toDateString()
