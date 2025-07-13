@@ -68,8 +68,7 @@ export function AddTradeForm() {
                 name="lotSize"
                 type="number"
                 placeholder="0.1"
-                min={0.01}
-                step={0.01}
+                step="0.01"
                 required
                 className="bg-background border-border text-foreground mt-2"
               />
