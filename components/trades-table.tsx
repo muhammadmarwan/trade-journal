@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { Trade } from "@/lib/types"
 import { getTrades } from "@/lib/actions"
-import { X } from "lucide-react"
+import { X, ChevronLeft, ChevronRight } from "lucide-react"
 
 function fmt(n?: number | null) {
   return typeof n === "number" && !Number.isNaN(n) ? n.toFixed(2) : "-"
@@ -21,14 +21,22 @@ interface TradesTableProps {
 
 export function TradesTable({ trades: initialTrades, selectedDate, onClearDate }: TradesTableProps) {
   const [currentTrades, setCurrentTrades] = useState<Trade[]>(initialTrades)
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
 
   useEffect(() => {
     const fetchTrades = async () => {
       const fetchedTrades = await getTrades(selectedDate || undefined)
       setCurrentTrades(fetchedTrades)
+      setCurrentPage(1) // Reset to first page when trades change
     }
     fetchTrades()
   }, [selectedDate])
+
+  const totalPages = Math.ceil(currentTrades.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentPageTrades = currentTrades.slice(startIndex, endIndex)
 
   return (
     <Card className="bg-card border-border">
@@ -54,12 +62,11 @@ export function TradesTable({ trades: initialTrades, selectedDate, onClearDate }
                 <TableHead className="text-muted-foreground">Entry</TableHead>
                 <TableHead className="text-muted-foreground">Exit</TableHead>
                 <TableHead className="text-muted-foreground">P&L</TableHead>
-                <TableHead className="text-muted-foreground">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentTrades.length > 0 ? (
-                currentTrades.map((trade) => (
+              {currentPageTrades.length > 0 ? (
+                currentPageTrades.map((trade) => (
                   <TableRow key={trade.id} className="border-border">
                     <TableCell className="text-foreground">{new Date(trade.trade_date).toLocaleDateString()}</TableCell>
                     <TableCell className="font-medium text-foreground">{trade.symbol}</TableCell>
@@ -74,9 +81,6 @@ export function TradesTable({ trades: initialTrades, selectedDate, onClearDate }
                     <TableCell className={trade.profit_loss >= 0 ? "text-green-500" : "text-red-500"}>
                       ${fmt(trade.profit_loss)}
                     </TableCell>
-                    <TableCell>
-                      <Badge variant={trade.status === "CLOSED" ? "default" : "outline"}>{trade.status}</Badge>
-                    </TableCell>
                   </TableRow>
                 ))
               ) : (
@@ -89,6 +93,29 @@ export function TradesTable({ trades: initialTrades, selectedDate, onClearDate }
             </TableBody>
           </Table>
         </div>
+        {totalPages > 1 && (
+          <div className="flex items-center justify-end space-x-2 mt-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <span className="text-sm text-muted-foreground">
+              Page {currentPage} of {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
