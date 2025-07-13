@@ -97,7 +97,7 @@ export async function getTrades(date?: string): Promise<Trade[]> {
 
 export async function getDailyPnL(): Promise<DailyPnL[]> {
   await ensureColumns()
-  const rows = await sql<DailyPnL[]>`
+  const rows = await sql`
     SELECT
       COALESCE(trade_date, created_at::date)::text  AS date,
       SUM(profit_loss)::float8                      AS total_pnl,
@@ -107,7 +107,7 @@ export async function getDailyPnL(): Promise<DailyPnL[]> {
     GROUP BY COALESCE(trade_date, created_at::date)
     ORDER BY COALESCE(trade_date, created_at::date) DESC
   `
-  return rows
+  return rows as DailyPnL[]
 }
 
 export async function addTrade(formData: FormData) {
